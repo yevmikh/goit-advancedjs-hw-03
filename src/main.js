@@ -31,7 +31,7 @@ function hideCatInfo() {
 }
 function catSelectorUpload() {
   showLoader();
-  showCatSelector();
+  hideCatSelector();
   hideCatInfo();
 
   fetchBreeds()
@@ -47,7 +47,7 @@ function catSelectorUpload() {
     })
     .catch(error => {
       hideLoader();
-      hideCatSelector();
+      showCatSelector();
       hideCatInfo();
       iziToast.error({
         title: 'Error',
