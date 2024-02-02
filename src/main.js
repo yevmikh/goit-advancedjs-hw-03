@@ -71,7 +71,7 @@ function createMarkup() {
   fetchCatByBreed(breedId)
     .then(catData => {
       hideLoader();
-      showCatSelector();
+      hideCatSelector();
       showCatInfo();
       const data = catData[0];
       catInfo.innerHTML = `<img class = "img" src = "${data.url}" alt= "${data.breeds[0].name}" loading="lazy"/>
