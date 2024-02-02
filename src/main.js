@@ -6,19 +6,38 @@ import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
 
 const catInfo = document.querySelector('.cat-info');
 const catSelector = document.querySelector('.breed-select');
-const loader = document.querySelector('.loader');
 
 const loaderEl = document.createElement('span');
-loaderEl.className = 'loader';
+loaderEl.className = 'loader hidden';
 document.body.appendChild(loaderEl);
-catInfo.innerHTML = '';
-catInfo.appendChild(loaderEl);
-loaderEl.style.display = 'block';
 
+function showLoader() {
+  loaderEl.classList.remove('hidden');
+}
+function hideLoader() {
+  loaderEl.classList.add('hidden');
+}
+function showCatSelector() {
+  catSelector.classList.remove('hidden');
+}
+function hideCatSelector() {
+  catSelector.classList.add('hidden');
+}
+function showCatInfo() {
+  catInfo.classList.remove('hidden');
+}
+function hideCatInfo() {
+  catInfo.classList.add('hidden');
+}
 function catSelectorUpload() {
+  showLoader();
+  hideCatSelector();
+  hideCatInfo();
+
   fetchBreeds()
     .then(breeds => {
-      catSelector.style.display = 'flex';
+      hideLoader();
+      showCatSelector();
       breeds.forEach(({ id, name }) => {
         catSelector.appendChild(new Option(name, id));
       });
@@ -27,30 +46,33 @@ function catSelectorUpload() {
       });
     })
     .catch(error => {
+      hideLoader();
+      hideCatSelector();
+      hideCatInfo();
       iziToast.error({
         title: 'Error',
         message: 'Oops! Something went wrong! Try reloading the page!',
         position: 'bottomCenter',
         timeout: false,
-
         color: 'yellow',
       });
-      catSelector.style.display = 'none';
-    })
-    .finally(() => {
-      loaderEl.style.display = 'block';
     });
 }
 
 ////// drawing image and content
 catSelector.addEventListener('change', createMarkup);
 function createMarkup() {
-  catInfo.innerHTML = '';
-  catInfo.appendChild(loaderEl);
+  showLoader();
+  hideCatSelector();
+  hideCatInfo();
+
   const breedId = catSelector.value;
 
   fetchCatByBreed(breedId)
     .then(catData => {
+      hideLoader();
+      hideCatSelector();
+      showCatInfo();
       const data = catData[0];
       catInfo.innerHTML = `<img class = "img" src = "${data.url}" alt= "${data.breeds[0].name}" loading="lazy"/>
       <div class = "text-container">
@@ -60,6 +82,9 @@ function createMarkup() {
 </div>`;
     })
     .catch(error => {
+      hideLoader();
+      hideCatSelector();
+      hideCatInfo();
       iziToast.error({
         title: 'Error',
         message: 'Oops! Something went wrong! Try reloading the page!',
@@ -68,10 +93,6 @@ function createMarkup() {
         backgroundColor: 'yellow,',
         color: 'yellow',
       });
-    })
-    .finally(() => {
-      loaderEl.style.display = 'block';
     });
 }
-
 catSelectorUpload();
