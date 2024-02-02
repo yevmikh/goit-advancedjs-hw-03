@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.thecatapi.com/v1';
-const SELECTOR_END_POINT = `${BASE_URL}/breeds1`;
+const SELECTOR_END_POINT = `${BASE_URL}/breeds`;
 const EMAGE_END_POIND = `${BASE_URL}/images/search?`;
 const API_KEY =
   'live_hYHqSU1vkpXeYjXQ3zdI4yWdoi0g8Rg34LE74zI7SScY4LWF3GhroxnVWF81pKGm';
