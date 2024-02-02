@@ -47,7 +47,7 @@ function catSelectorUpload() {
     })
     .catch(error => {
       hideLoader();
-      showCatSelector();
+      hideCatSelector();
       hideCatInfo();
       iziToast.error({
         title: 'Error',
@@ -63,7 +63,7 @@ function catSelectorUpload() {
 catSelector.addEventListener('change', createMarkup);
 function createMarkup() {
   showLoader();
-  hideCatSelector();
+  showCatSelector();
   hideCatInfo();
 
   const breedId = catSelector.value;
