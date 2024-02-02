@@ -63,7 +63,7 @@ function catSelectorUpload() {
 catSelector.addEventListener('change', createMarkup);
 function createMarkup() {
   showLoader();
-  showCatSelector();
+  hideCatSelector();
   hideCatInfo();
 
   const breedId = catSelector.value;
@@ -71,7 +71,7 @@ function createMarkup() {
   fetchCatByBreed(breedId)
     .then(catData => {
       hideLoader();
-      hideCatSelector();
+      showCatSelector();
       showCatInfo();
       const data = catData[0];
       catInfo.innerHTML = `<img class = "img" src = "${data.url}" alt= "${data.breeds[0].name}" loading="lazy"/>
