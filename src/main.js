@@ -36,17 +36,13 @@ function catSelectorUpload() {
       });
     })
     .catch(error => {
-      iziToast
-        .error({
-          title: 'Error',
-          message: 'Oops! Something went wrong! Try reloading the page!',
-          position: 'bottomCenter',
-          timeout: false,
-          color: 'yellow',
-        })
-        .finally(() => {
-          hideElement(loaderEl, false);
-        });
+      iziToast.error({
+        title: 'Error',
+        message: 'Oops! Something went wrong! Try reloading the page!',
+        position: 'bottomCenter',
+        timeout: false,
+        color: 'yellow',
+      });
     })
     .finally(() => {
       hideElement(loaderEl, false);
@@ -72,18 +68,14 @@ function createMarkup() {
 </div>`;
     })
     .catch(error => {
-      iziToast
-        .error({
-          title: 'Error',
-          message: 'Oops! Something went wrong! Try reloading the page!',
-          position: 'bottomCenter',
-          timeout: 5000,
-          backgroundColor: 'yellow,',
-          color: 'yellow',
-        })
-        .finally(() => {
-          hideElement(loaderEl, false);
-        });
+      iziToast.error({
+        title: 'Error',
+        message: 'Oops! Something went wrong! Try reloading the page!',
+        position: 'bottomCenter',
+        timeout: 5000,
+        backgroundColor: 'yellow,',
+        color: 'yellow',
+      });
     })
     .finally(() => {
       hideElement(loaderEl, false);
