@@ -4,40 +4,30 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
 
+function hideElement(element, isVisible) {
+  element.classList.toggle('hidden', !isVisible);
+}
+
 const catInfo = document.querySelector('.cat-info');
 const catSelector = document.querySelector('.breed-select');
-
-const loaderEl = document.createElement('span');
-loaderEl.className = 'loader';
-document.body.appendChild(loaderEl);
+const loaderEl = document.querySelector('.loader');
 
 function showLoader() {
   loaderEl.classList.remove('hidden');
 }
-function hideLoader() {
-  loaderEl.classList.add('hidden');
-}
-function showCatSelector() {
-  catSelector.classList.remove('hidden');
-}
-function hideCatSelector() {
-  catSelector.classList.add('hidden');
-}
-function showCatInfo() {
-  catInfo.classList.remove('hidden');
-}
-function hideCatInfo() {
-  catInfo.classList.add('hidden');
-}
-function catSelectorUpload() {
-  showLoader();
-  hideCatSelector();
-  hideCatInfo();
 
+hideElement(catSelector, false);
+hideElement(loaderEl, true);
+hideElement(catInfo, true);
+
+function catSelectorUpload() {
+  hideElement(catSelector, false);
+  showLoader();
+  hideElement(catInfo, true);
+  catInfo.innerHTML = '';
   fetchBreeds()
     .then(breeds => {
-      hideLoader();
-      showCatSelector();
+      catSelector.style.display = 'flex';
       breeds.forEach(({ id, name }) => {
         catSelector.appendChild(new Option(name, id));
       });
@@ -46,34 +36,33 @@ function catSelectorUpload() {
       });
     })
     .catch(error => {
-      hideLoader();
-      hideCatSelector();
-      //////
-      showCatInfo();
-      iziToast.error({
-        title: 'Error',
-        message: 'Oops! Something went wrong! Try reloading the page!',
-        position: 'bottomCenter',
-        timeout: false,
-        color: 'yellow',
-      });
+      iziToast
+        .error({
+          title: 'Error',
+          message: 'Oops! Something went wrong! Try reloading the page!',
+          position: 'bottomCenter',
+          timeout: false,
+          color: 'yellow',
+        })
+        .finally(() => {
+          hideElement(loaderEl, false);
+        });
+    })
+    .finally(() => {
+      hideElement(loaderEl, false);
     });
 }
-
+catSelectorUpload();
 ////// drawing image and content
 catSelector.addEventListener('change', createMarkup);
 function createMarkup() {
+  hideElement(catInfo, true);
   showLoader();
-  hideCatSelector();
-  hideCatInfo();
-
+  catInfo.innerHTML = '';
   const breedId = catSelector.value;
 
   fetchCatByBreed(breedId)
     .then(catData => {
-      hideLoader();
-      hideCatSelector();
-      showCatInfo();
       const data = catData[0];
       catInfo.innerHTML = `<img class = "img" src = "${data.url}" alt= "${data.breeds[0].name}" loading="lazy"/>
       <div class = "text-container">
@@ -83,18 +72,20 @@ function createMarkup() {
 </div>`;
     })
     .catch(error => {
-      hideLoader();
-      hideCatSelector();
-      /////////
-      showCatInfo();
-      iziToast.error({
-        title: 'Error',
-        message: 'Oops! Something went wrong! Try reloading the page!',
-        position: 'bottomCenter',
-        timeout: 5000,
-        backgroundColor: 'yellow,',
-        color: 'yellow',
-      });
+      iziToast
+        .error({
+          title: 'Error',
+          message: 'Oops! Something went wrong! Try reloading the page!',
+          position: 'bottomCenter',
+          timeout: 5000,
+          backgroundColor: 'yellow,',
+          color: 'yellow',
+        })
+        .finally(() => {
+          hideElement(loaderEl, false);
+        });
+    })
+    .finally(() => {
+      hideElement(loaderEl, false);
     });
 }
-catSelectorUpload();
