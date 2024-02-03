@@ -48,7 +48,8 @@ function catSelectorUpload() {
     .catch(error => {
       hideLoader();
       hideCatSelector();
-      hideCatInfo();
+      //////
+      showCatInfo();
       iziToast.error({
         title: 'Error',
         message: 'Oops! Something went wrong! Try reloading the page!',
@@ -84,7 +85,8 @@ function createMarkup() {
     .catch(error => {
       hideLoader();
       hideCatSelector();
-      hideCatInfo();
+      /////////
+      showCatInfo();
       iziToast.error({
         title: 'Error',
         message: 'Oops! Something went wrong! Try reloading the page!',
