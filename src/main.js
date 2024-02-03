@@ -47,7 +47,7 @@ function catSelectorUpload() {
     })
     .catch(error => {
       hideLoader();
-      hideCatSelector();
+      // hideCatSelector();
       //////
       showCatInfo();
       iziToast.error({
