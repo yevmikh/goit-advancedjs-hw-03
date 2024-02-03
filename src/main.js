@@ -31,7 +31,7 @@ function hideCatInfo() {
 }
 function catSelectorUpload() {
   showLoader();
-  hideCatSelector();
+  // hideCatSelector();
   hideCatInfo();
 
   fetchBreeds()
