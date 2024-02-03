@@ -8,7 +8,7 @@ const catInfo = document.querySelector('.cat-info');
 const catSelector = document.querySelector('.breed-select');
 
 const loaderEl = document.createElement('span');
-loaderEl.className = 'loader hidden';
+loaderEl.className = 'loader';
 document.body.appendChild(loaderEl);
 
 function showLoader() {
@@ -31,7 +31,7 @@ function hideCatInfo() {
 }
 function catSelectorUpload() {
   showLoader();
-  // hideCatSelector();
+  hideCatSelector();
   hideCatInfo();
 
   fetchBreeds()
@@ -47,7 +47,7 @@ function catSelectorUpload() {
     })
     .catch(error => {
       hideLoader();
-      // hideCatSelector();
+      hideCatSelector();
       //////
       showCatInfo();
       iziToast.error({
